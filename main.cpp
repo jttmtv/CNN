@@ -1,3 +1,9 @@
+#include "CNN.hpp"
+
+#ifndef MAX
+#define MAX(a, b) ((a) < (b) ? (b) : (a))
+#endif
+
 inline float im2col_get_pixel(const float *im, int height, int width, int channels, int row, int col, int channel, int pad)
 {
     row -= pad;
