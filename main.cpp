@@ -5,12 +5,12 @@ using namespace std;
 #define MAX(a, b) ((a) < (b) ? (b) : (a))
 #endif
 
-float *MaxPoll2d(const float *neuron, const int channels, const int height, const int width)
+float *MaxPoll2d(float *neuron, const int channels, const int height, const int width)
 {
     float max;
     float *p1, *p2;
     int out_h = height / 2, out_w = width / 2;
-    float *out = new float[out_h * out_w];
+    float *out = new float[channels * out_h * out_w];
     for (int c = 0; c < channels; ++c)
     {
         p1 = const_cast<float *>(neuron + c * height * width);
@@ -30,19 +30,23 @@ float *MaxPoll2d(const float *neuron, const int channels, const int height, cons
             p2 += width;
         }
     }
-    delete[] neuron;
+    //delete[] neuron;
     return out;
 }
 
 int main()
 {
-    float a[4 * 4 * 3];
+    float *a = new float[4 * 4 * 3];
     float *b;
     for (int i = 0; i < 3; ++i)
         for (int j = 0; j < 4; ++j)
-            for (int k = 0; k < 4; k++)
+            for (int k = 0; k < 4; ++k)
                 a[i * 4 * 4 + j * 4 + k] = k;
     b = MaxPoll2d(a, 3, 4, 4);
+    for (int i = 0; i < 4 * 4 * 3; ++i)
+        cout << a[i] << " ";
+    printf("\n");
     for (int i = 0; i < 2 * 2 * 3; ++i)
         cout << b[i] << " ";
+    printf("\n");
 }
