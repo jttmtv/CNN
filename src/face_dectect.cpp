@@ -3,10 +3,10 @@
 using namespace std;
 using namespace cv;
 
-void myAlloc(const string &full_path, Img &img)
+void myAlloc(const cv::String& full_path, Img& img)
 {
     int start_pos;
-    uchar *uc_pixel;
+    uchar* uc_pixel;
     img.height = 128;
     img.width = 128;
     img.channels = 3;
@@ -32,21 +32,24 @@ Img::Img()
     height = 0;
     width = 0;
     channels = 0;
+    score = NULL;
     data = NULL;
 }
 
-Img::Img(const Img &img)
+Img::Img(const Img& img)
 {
     channels = img.channels;
     height = img.height;
     width = img.width;
+    score = NULL;
     data = new float[channels * height * width];
     memcpy(data, img.data, sizeof(float) * channels * height * width);
 }
 
-Img::Img(const string &full_path)
+Img::Img(const cv::String& full_path)
 {
     data = NULL;
+    score = NULL;
     myAlloc(full_path, *this);
 }
 
@@ -56,15 +59,15 @@ Img::~Img()
     delete[] score;
 }
 
-void Img::scanner(const string &full_path)
+void Img::scanner(const cv::String& full_path)
 {
     myAlloc(full_path, *this);
 }
 
-float *Img::facedect()
+float* Img::facedect()
 {
-    float *neuron = NULL;
-    float *dst = new float[channels * height * width];
+    float* neuron = NULL;
+    float* dst = new float[channels * height * width];
     memcpy(dst, data, sizeof(float) * channels * height * width);
     neuron = ConvBNReLU(dst, height, width, conv_params[0]);
     neuron = MaxPoll2d(neuron, conv_params[0].out_channels, 64, 64);
