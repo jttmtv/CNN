@@ -2,7 +2,6 @@
 #define _CNN_
 #include <omp.h>
 #include <cmath>
-#include <string>
 #include <cstring>
 #include <iostream>
 #include "param.hpp"
@@ -18,11 +17,11 @@
 using namespace std;
 using namespace cv;
 
-bool fast_sgemm(const float *A, const float *B, float *C, const size_t M, const size_t K, const size_t N);
+bool fast_sgemm(const float* A, const float* B, float* C, const size_t M, const size_t K, const size_t N);
 void im2col_cpu(const float* data_im, int channels, int height, int width, int kernel_size, int stride, int pad, float* data_col);
-float *ConvBNReLU(float *neuron, const int height, const int width, const conv_param &param);
-float *MaxPoll2d(float *neuron, const int channels, const int height, const int width);
-float *FullyCon(float *neuron, const fc_param &param);
+float* ConvBNReLU(float* neuron, const int height, const int width, const conv_param& param);
+float* MaxPoll2d(float* neuron, const int channels, const int height, const int width);
+float* FullyCon(float* neuron, const fc_param& param);
 void SoftMax(float* src, const int src_len);
 
 class Img
@@ -33,15 +32,15 @@ private:
     int height;
     float* data;
     float* score;
-    friend void myAlloc(const string &full_path, Img &img);
+    friend void myAlloc(const cv::String& full_path, Img& img);
 
 public:
     Img();
-    Img(const Img &img);
-    Img(const string &full_path);
+    Img(const Img& img);
+    Img(const cv::String& full_path);
     ~Img();
-    void scanner(const string &full_path);
-    float *facedect();
+    void scanner(const cv::String& full_path);
+    float* facedect();
 };
 
 #endif
