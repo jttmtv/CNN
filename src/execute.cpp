@@ -16,10 +16,6 @@ void im2col_cpu(const float* data_im, int channels, int height, int width, int k
 	int height_col = (height + 2 * pad - kernel_size) / stride + 1;
 	int width_col = (width + 2 * pad - kernel_size) / stride + 1;
 	int channels_col = channels * kernel_size * kernel_size;
-#ifdef _OPENMP
-	omp_set_num_threads(NUM_THREADS);
-#pragma omp parallel for
-#endif
 	for (c = 0; c < channels_col; ++c) {
 		int w_offset = c % kernel_size;
 		int h_offset = (c / kernel_size) % kernel_size;
@@ -46,10 +42,6 @@ float* ConvBNReLU(float* neuron, const int height, const int width, const conv_p
 	float* matB = new float[K * N];
 	float* matC = new float[M * N];
 	im2col_cpu(neuron, param.in_channels, height, width, param.kernel_size, param.stride, param.pad, matB);
-#ifdef _OPENMP
-	omp_set_num_threads(NUM_THREADS);
-#pragma omp parallel for
-#endif
 	for (int oc = 0; oc < param.out_channels; ++oc)
 		for (int ks = 0; ks < param.in_channels * param.kernel_size * param.kernel_size; ++ks)
 			matA[oc * K + ks] = param.p_weight[oc * K + ks];
@@ -72,10 +64,6 @@ float* MaxPoll2d(float* neuron, const int channels, const int height, const int 
 	float* p1 = NULL, * p2 = NULL;
 	const int out_h = height / 2, out_w = width / 2;
 	float* out = new float[channels * out_h * out_w];
-#ifdef _OPENMP
-	omp_set_num_threads(NUM_THREADS);
-#pragma omp parallel for
-#endif
 	for (int c = 0; c < channels; ++c)
 	{
 		p1 = neuron + c * height * width;
