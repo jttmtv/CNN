@@ -1,2 +1,2 @@
-**Simple CNN implementation for face recognition**
+**Simple CNN implementation for face detection**
 
