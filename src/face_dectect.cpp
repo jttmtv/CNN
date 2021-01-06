@@ -45,6 +45,7 @@ Img::Img(const Img& img)
     width = img.width;
     score = new float[2 * 1];
     data = new float[channels * height * width];
+    memcpy(score, img.score, sizeof(float) * 2 * 1);
     memcpy(data, img.data, sizeof(float) * channels * height * width);
 }
 
