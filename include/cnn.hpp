@@ -21,7 +21,7 @@ bool fast_sgemm(const float* A, const float* B, float* C, const size_t M, const 
 void im2col_cpu(const float* data_im, int channels, int height, int width, int kernel_size, int stride, int pad, float* data_col);
 float* ConvBNReLU(float* neuron, const int height, const int width, const conv_param& param);
 float* MaxPoll2d(float* neuron, const int channels, const int height, const int width);
-float* FullyCon(float* neuron, const fc_param& param);
+void FullyCon(float* neuron, float* dst, const fc_param& param);
 void SoftMax(float* src, const int src_len);
 
 class Img
