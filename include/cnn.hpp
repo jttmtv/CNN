@@ -1,5 +1,6 @@
 #ifndef _CNN_
 #define _CNN_
+
 #include <omp.h>
 #include <cmath>
 #include <cstring>
