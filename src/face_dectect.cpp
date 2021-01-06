@@ -13,7 +13,7 @@ void myAlloc(const cv::String& full_path, Img& img)
     Mat cvmat = imread(full_path, IMREAD_COLOR);
     if (!img.data){
         img.data = new float[128 * 128 * 3];
-        img.score = new float[1 * 2];
+        img.score = new float[2 * 1];
     }
     for (int h = 0; h < cvmat.rows; ++h)
     {
@@ -43,7 +43,7 @@ Img::Img(const Img& img)
     channels = img.channels;
     height = img.height;
     width = img.width;
-    score = new float[1 * 2];
+    score = new float[2 * 1];
     data = new float[channels * height * width];
     memcpy(data, img.data, sizeof(float) * channels * height * width);
 }
