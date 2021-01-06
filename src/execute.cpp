@@ -89,18 +89,16 @@ float* MaxPoll2d(float* neuron, const int channels, const int height, const int 
 	return out;
 }
 
-float* FullyCon(float* neuron, const fc_param& param)
+void FullyCon(float* neuron,float* dst, const fc_param& param)
 {
 	const int M = param.out_features;
 	const int K = param.in_features;
 	const int N = 1;
-	float* out = new float[param.out_features * 1];
-	fast_sgemm(param.p_weight, neuron, out, M, K, N);
+	fast_sgemm(param.p_weight, neuron, dst, M, K, N);
 	for (int i = 0; i < M; ++i)
 		for (int j = 0; j < N; ++j)
-			out[i * N + j] += param.p_bias[i];
+			dst[i * N + j] += param.p_bias[i];
 	delete[] neuron;
-	return out;
 }
 
 void SoftMax(float* src, const int src_len)
